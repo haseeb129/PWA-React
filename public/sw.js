@@ -1,7 +1,7 @@
 //CHACHE ALL FILES
 let cacheData = "appv1";
 this.addEventListener("install", (event) => {
-  console.log("creating cache");
+  console.log("Installed");
   event.waitUntil(
     caches.open(cacheData).then((cacheres) => {
       cacheres.addAll([
@@ -14,6 +14,20 @@ this.addEventListener("install", (event) => {
         "/users",
         "/about",
       ]);
+    })
+  );
+});
+
+this.addEventListener("activate", function (event) {
+  event.waitUntil(
+    caches.keys().then(function (cacheNames) {
+      return Promise.all(
+        cacheNames.map(function (cacheName) {
+          if (CACHE_NAME !== cacheName && cacheName.startsWith("gih-cache")) {
+            return caches.delete(cacheName);
+          }
+        })
+      );
     })
   );
 });
@@ -46,3 +60,24 @@ this.addEventListener("fetch", (event) => {
     );
   }
 });
+
+// this.addEventListener("fetch", (event) => {
+//   const url = event.request.url;
+//   console.log("Inside new Fetch", url);
+
+//   event.respondWith(
+//     fetch(event.request)
+//       .then((res) => {
+//         console.log("inside Then", res);
+//         const resClone = res.clone();
+//         caches.open(cacheData).then((cache) => {
+//           cache.put(url, resClone);
+//         });
+//         return res;
+//       })
+//       .catch((err) => {
+//         caches.match(event.request).then((res) => res);
+//         console.log(err);
+//       })
+//   );
+// });
