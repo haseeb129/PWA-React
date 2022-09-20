@@ -1,5 +1,3 @@
-console.log("Registered");
-
 //CHACHE ALL FILES
 let cacheData = "appv1";
 this.addEventListener("install", (event) => {
@@ -52,6 +50,15 @@ this.addEventListener("install", (event) => {
 // });
 
 this.addEventListener("fetch", (event) => {
+  console.log("this.registration", this.registration);
+  if (!navigator.onLine) {
+    event.waitUntil(
+      this.registration.showNotification("Buddy", {
+        body: "Internet is not Working ",
+      })
+    );
+  }
+
   if (!navigator.onLine) {
     event.respondWith(
       caches.match(event.request).then((resp) => {
