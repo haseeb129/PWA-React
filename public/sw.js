@@ -21,31 +21,43 @@ this.addEventListener("install", (event) => {
 });
 
 //FETCH ALL IN OFFLINE MODE
-this.addEventListener("fetch", (event) => {
-  console.log("1fetching  cache");
-  if (!navigator.onLine) {
-    //PUSH NOTIFICATION WHEN URL IS BELOW MENTIONED ONE
-    if (event.request.url === "http://localhost:3000/manifest.json") {
-      event.waitUntil(
-        this.registration.showNotification("You Are Offline", {
-          body: "Make sure that you internet connection is stable to get the latest updates and feature. Thankyou!",
-        })
-      );
-    }
+// this.addEventListener("fetch", (event) => {
+//   console.log("1fetching  cache");
+//   if (!navigator.onLine) {
+//     //PUSH NOTIFICATION WHEN URL IS BELOW MENTIONED ONE
+//     if (event.request.url === "http://localhost:3000/manifest.json") {
+//       event.waitUntil(
+//         this.registration.showNotification("You Are Offline", {
+//           body: "Make sure that you internet connection is stable to get the latest updates and feature. Thankyou!",
+//         })
+//       );
+//     }
 
+//     event.respondWith(
+//       caches.match(event.request).then((response) => {
+//         if (response) {
+//           return response;
+//         }
+//         let requestUrl = event.request.clone();
+//         fetch(requestUrl)
+//           .then((res) => {
+//             console.log(res);
+//           })
+//           .catch((err) => {
+//             console.log(err);
+//           });
+//       })
+//     );
+//   }
+// });
+
+this.addEventListener("fetch", (event) => {
+  if (!navigator.onLine) {
     event.respondWith(
-      caches.match(event.request).then((response) => {
-        if (response) {
-          return response;
+      caches.match(event.request).then((resp) => {
+        if (resp) {
+          return resp;
         }
-        let requestUrl = event.request.clone();
-        fetch(requestUrl)
-          .then((res) => {
-            console.log(res);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
       })
     );
   }
