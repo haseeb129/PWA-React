@@ -14,6 +14,9 @@ this.addEventListener("install", (event) => {
         "/",
         "/users",
         "/about",
+        "/sw.js",
+        "/manifest.webmanifest",
+        "/icon-192x192.png",
       ]);
     })
   );
@@ -73,7 +76,7 @@ this.addEventListener("fetch", function (event) {
     }
   }
   event.respondWith(
-    caches.open(event.request.url).then(function (cache) {
+    caches.open(cacheData).then(function (cache) {
       return cache.match(event.request).then(function (response) {
         if (navigator.onLine) {
           return fetch(event.request).then(function (response) {

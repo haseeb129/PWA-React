@@ -66,7 +66,8 @@ export function register(config) {
 function registerValidSW(swUrl, config) {
   navigator.serviceWorker
     .register(swUrl)
-    .then((registration) => {
+    .then(async (registration) => {
+      await window.Notification.requestPermission();
       registration.onupdatefound = () => {
         const installingWorker = registration.installing;
         if (installingWorker == null) {

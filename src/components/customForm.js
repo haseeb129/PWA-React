@@ -13,16 +13,15 @@ const CustomForm = () => {
 
   const addHandler = () => {
     setIsSuccess(false);
-
+    const dummyValue = {
+      userId: 1,
+      id: 1,
+      title: "inputValue",
+    };
     if (!navigator.onLine) {
       serviceWorker.registerSync();
-      insertIntoDatabase(JSON.stringify({ name: inputValue }));
+      insertIntoDatabase(JSON.stringify(dummyValue));
     } else {
-      const dummyValue = {
-        userId: 1,
-        id: 1,
-        title: "inputValue",
-      };
       console.log("addHandler");
       fetch("https://jsonplaceholder.typicode.com/albums", {
         method: "POST",

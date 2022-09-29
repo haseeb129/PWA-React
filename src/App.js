@@ -21,7 +21,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Navbar bg="primary" variant="dark">
-          <Navbar.Brand href="#home">Navbar</Navbar.Brand>
+          <Navbar.Brand href="/">Navbar</Navbar.Brand>
           <Nav className="mr-auto">
             <Nav.Link>
               <Link to="/">Home</Link>
