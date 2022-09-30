@@ -23,6 +23,8 @@ this.addEventListener("install", (event) => {
 });
 
 this.addEventListener("activate", function (event) {
+  event.waitUntil(self.clients.claim());
+
   event.waitUntil(
     caches.keys().then(function (cacheNames) {
       return Promise.all(
